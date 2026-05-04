@@ -1,1 +1,93 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Custom Media Player</title>\n    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">\n    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\n    <link rel="stylesheet" href="style.css">\n</head>\n<body>\n    <div class="main-container">\n        <div class="album-art-container">\n            <img id="cover-art" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&h=500&fit=crop" alt="Album Art">\n            <h1 id="track-title">Track Title</h1>\n            <h2 id="track-artist">Artist Name</h2>\n        </div>\n    </div>\n\n    <div class="player-controls-container">\n        <div class="track-info-small">\n            <img id="small-cover" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=50&h=50&fit=crop" alt="Small Cover">\n            <div class="track-text">\n                <span id="small-title">Track Title</span>\n                <span id="small-artist">Artist Name</span>\n            </div>\n        </div>\n\n        <div class="center-controls">\n            <div class="playback-buttons">\n                <button id="prev-btn" class="control-btn"><i class="fas fa-step-backward"></i></button>\n                <button id="play-btn" class="control-btn play-circle"><i class="fas fa-play" id="play-icon"></i></button>\n                <button id="next-btn" class="control-btn"><i class="fas fa-step-forward"></i></button>\n            </div>\n            <div class="progress-container">\n                <span id="current-time">0:00</span>\n                <div class="progress-bar-wrapper" id="progress-container">\n                    <div class="progress-bar" id="progress"></div>\n                </div>\n                <span id="duration">0:00</span>\n            </div>\n        </div>\n\n        <div class="volume-controls">\n            <i class="fas fa-volume-up" id="volume-icon"></i>\n            <div class="volume-bar-wrapper" id="volume-container">\n                <div class="volume-bar" id="volume-progress"></div>\n            </div>\n        </div>\n    </div>\n\n    <audio id="audio"></audio>\n    <script src="script.js"></script>\n</body>\n</html>\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Media Player — Spotify Clone</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Main Album Display -->
+    <main class="main-container">
+        <section class="album-display" aria-label="Now Playing">
+            <div class="album-art-wrapper">
+                <img id="cover-art"
+                     src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&h=500&fit=crop"
+                     alt="Album Art"
+                     draggable="false">
+            </div>
+            <h1 id="track-title" class="track-title">Track Title</h1>
+            <p id="track-artist" class="track-artist">Artist Name</p>
+        </section>
+    </main>
+
+    <!-- Fixed Bottom Player Bar -->
+    <footer class="player-bar" role="region" aria-label="Player Controls">
+
+        <!-- Left: Track Info (small) -->
+        <div class="player-bar__left">
+            <img id="small-cover"
+                 src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=50&h=50&fit=crop"
+                 alt="Now Playing Cover"
+                 class="player-bar__cover"
+                 draggable="false">
+            <div class="player-bar__track-text">
+                <span id="small-title" class="player-bar__title">Track Title</span>
+                <span id="small-artist" class="player-bar__artist">Artist Name</span>
+            </div>
+        </div>
+
+        <!-- Center: Playback Controls + Progress -->
+        <div class="player-bar__center">
+            <div class="playback-controls">
+                <button id="shuffle-btn" class="control-btn control-btn--small" aria-label="Shuffle" title="Shuffle">
+                    <i class="fas fa-shuffle"></i>
+                </button>
+                <button id="prev-btn" class="control-btn control-btn--small" aria-label="Previous" title="Previous">
+                    <i class="fas fa-backward-step"></i>
+                </button>
+                <button id="play-btn" class="control-btn control-btn--play" aria-label="Play" title="Play">
+                    <i class="fas fa-play" id="play-icon"></i>
+                </button>
+                <button id="next-btn" class="control-btn control-btn--small" aria-label="Next" title="Next">
+                    <i class="fas fa-forward-step"></i>
+                </button>
+                <button id="repeat-btn" class="control-btn control-btn--small" aria-label="Repeat" title="Repeat">
+                    <i class="fas fa-repeat"></i>
+                </button>
+            </div>
+            <div class="progress-row">
+                <span id="current-time" class="time-label">0:00</span>
+                <div class="progress-track" id="progress-track" role="slider"
+                     aria-label="Song progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="progress-fill" id="progress-fill"></div>
+                    <div class="progress-thumb" id="progress-thumb"></div>
+                </div>
+                <span id="duration" class="time-label">0:00</span>
+            </div>
+        </div>
+
+        <!-- Right: Volume Controls -->
+        <div class="player-bar__right">
+            <button id="volume-btn" class="control-btn control-btn--small" aria-label="Volume" title="Volume">
+                <i class="fas fa-volume-high" id="volume-icon"></i>
+            </button>
+            <div class="volume-track" id="volume-track" role="slider"
+                 aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+                <div class="volume-fill" id="volume-fill"></div>
+                <div class="volume-thumb" id="volume-thumb"></div>
+            </div>
+        </div>
+
+    </footer>
+
+    <!-- Hidden Audio Element -->
+    <audio id="audio" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

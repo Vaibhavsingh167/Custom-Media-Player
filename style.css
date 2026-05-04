@@ -1,1 +1,419 @@
-:root {\n    --bg-color: #121212;\n    --surface-color: #181818;\n    --surface-light: #282828;\n    --accent-color: #1DB954;\n    --text-primary: #FFFFFF;\n    --text-secondary: #B3B3B3;\n    --font-family: 'Inter', sans-serif;\n}\n\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n}\n\nbody {\n    background-color: var(--bg-color);\n    color: var(--text-primary);\n    font-family: var(--font-family);\n    height: 100vh;\n    overflow: hidden;\n    display: flex;\n    flex-direction: column;\n}\n\n.main-container {\n    flex: 1;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    padding-bottom: 90px;\n    background: linear-gradient(180deg, #2a2a2a 0%, var(--bg-color) 100%);\n}\n\n.album-art-container {\n    text-align: center;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\n#cover-art {\n    width: 350px;\n    height: 350px;\n    object-fit: cover;\n    border-radius: 8px;\n    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);\n    margin-bottom: 30px;\n    transition: src 0.3s ease;\n}\n\n#track-title {\n    font-size: 2rem;\n    font-weight: 700;\n    margin-bottom: 8px;\n}\n\n#track-artist {\n    font-size: 1.2rem;\n    color: var(--text-secondary);\n    font-weight: 400;\n}\n\n.player-controls-container {\n    position: fixed;\n    bottom: 0;\n    width: 100%;\n    height: 90px;\n    background-color: var(--surface-color);\n    border-top: 1px solid #282828;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    padding: 0 20px;\n    z-index: 100;\n}\n\n.track-info-small {\n    display: flex;\n    align-items: center;\n    width: 30%;\n}\n\n#small-cover {\n    width: 56px;\n    height: 56px;\n    border-radius: 4px;\n    margin-right: 15px;\n    object-fit: cover;\n}\n\n.track-text {\n    display: flex;\n    flex-direction: column;\n}\n\n#small-title {\n    font-size: 0.9rem;\n    font-weight: 600;\n    margin-bottom: 4px;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n#small-artist {\n    font-size: 0.75rem;\n    color: var(--text-secondary);\n}\n\n.center-controls {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    width: 40%;\n}\n\n.playback-buttons {\n    display: flex;\n    align-items: center;\n    gap: 20px;\n    margin-bottom: 8px;\n}\n\n.control-btn {\n    background: none;\n    border: none;\n    color: var(--text-secondary);\n    font-size: 1rem;\n    cursor: pointer;\n    transition: color 0.2s;\n}\n\n.control-btn:hover {\n    color: var(--text-primary);\n}\n\n.play-circle {\n    background-color: var(--text-primary);\n    color: var(--bg-color);\n    width: 32px;\n    height: 32px;\n    border-radius: 50%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: 0.9rem;\n    transition: transform 0.1s, background-color 0.2s;\n}\n\n.play-circle:hover {\n    transform: scale(1.05);\n    color: var(--bg-color);\n}\n\n.progress-container {\n    display: flex;\n    align-items: center;\n    width: 100%;\n    gap: 10px;\n}\n\n.progress-container span {\n    font-size: 0.75rem;\n    color: var(--text-secondary);\n    min-width: 40px;\n    text-align: center;\n}\n\n.progress-bar-wrapper {\n    flex: 1;\n    height: 4px;\n    background-color: #535353;\n    border-radius: 2px;\n    cursor: pointer;\n    position: relative;\n}\n\n.progress-bar {\n    height: 100%;\n    background-color: var(--text-primary);\n    border-radius: 2px;\n    width: 0%;\n    position: relative;\n}\n\n.progress-bar-wrapper:hover .progress-bar {\n    background-color: var(--accent-color);\n}\n\n.progress-bar::after {\n    content: "";\n    position: absolute;\n    right: -6px;\n    top: -4px;\n    width: 12px;\n    height: 12px;\n    background-color: var(--text-primary);\n    border-radius: 50%;\n    display: none;\n}\n\n.progress-bar-wrapper:hover .progress-bar::after {\n    display: block;\n}\n\n.volume-controls {\n    display: flex;\n    align-items: center;\n    width: 30%;\n    justify-content: flex-end;\n    gap: 10px;\n}\n\n#volume-icon {\n    color: var(--text-secondary);\n    font-size: 0.9rem;\n}\n\n.volume-bar-wrapper {\n    width: 100px;\n    height: 4px;\n    background-color: #535353;\n    border-radius: 2px;\n    cursor: pointer;\n    position: relative;\n}\n\n.volume-bar {\n    height: 100%;\n    background-color: var(--text-primary);\n    border-radius: 2px;\n    width: 100%;\n}\n\n.volume-bar-wrapper:hover .volume-bar {\n    background-color: var(--accent-color);\n}\n\n.volume-bar::after {\n    content: "";\n    position: absolute;\n    right: -6px;\n    top: -4px;\n    width: 12px;\n    height: 12px;\n    background-color: var(--text-primary);\n    border-radius: 50%;\n    display: none;\n}\n\n.volume-bar-wrapper:hover .volume-bar::after {\n    display: block;\n}\n
+/* ============================================================
+   Custom Media Player — Spotify Clone
+   Pure CSS3, no frameworks, no libraries
+   ============================================================ */
+
+/* --- Design Tokens (CSS Custom Properties) --- */
+:root {
+    --bg-primary: #121212;
+    --bg-surface: #181818;
+    --bg-elevated: #282828;
+    --bg-highlight: #333333;
+    --accent: #1DB954;
+    --accent-hover: #1ed760;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B3B3B3;
+    --text-subdued: #6a6a6a;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --player-height: 90px;
+    --transition-fast: 0.15s ease;
+    --transition-medium: 0.25s ease;
+    --shadow-album: 0 8px 40px rgba(0, 0, 0, 0.6);
+    --radius-sm: 4px;
+    --radius-md: 8px;
+}
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Main Container --- */
+.main-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: var(--player-height);
+    background: linear-gradient(180deg, #1a1a2e 0%, var(--bg-primary) 60%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* --- Album Display (Center Stage) --- */
+.album-display {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.album-art-wrapper {
+    position: relative;
+    width: 340px;
+    height: 340px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-album);
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.album-art-wrapper:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 50px rgba(0, 0, 0, 0.7);
+}
+
+#cover-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+.track-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.track-artist {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+/* ============================================================
+   Player Bar (Fixed Bottom)
+   ============================================================ */
+.player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--player-height);
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--bg-elevated);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    z-index: 100;
+}
+
+/* --- Left Section: Now Playing Info --- */
+.player-bar__left {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    min-width: 180px;
+}
+
+.player-bar__cover {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    margin-right: 14px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.player-bar__track-text {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.player-bar__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.player-bar__title:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.player-bar__artist {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.player-bar__artist:hover {
+    text-decoration: underline;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+/* --- Center Section: Controls + Progress --- */
+.player-bar__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    max-width: 722px;
+    gap: 4px;
+}
+
+.playback-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Control Buttons */
+.control-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-fast), transform var(--transition-fast);
+    outline: none;
+}
+
+.control-btn:hover {
+    color: var(--text-primary);
+}
+
+.control-btn:active {
+    transform: scale(0.92);
+}
+
+.control-btn--small {
+    font-size: 1rem;
+    width: 32px;
+    height: 32px;
+}
+
+.control-btn--small.active {
+    color: var(--accent);
+}
+
+.control-btn--small.active:hover {
+    color: var(--accent-hover);
+}
+
+.control-btn--play {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    font-size: 0.9rem;
+    transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+.control-btn--play:hover {
+    transform: scale(1.08);
+    background-color: #fff;
+    color: #000;
+}
+
+.control-btn--play:active {
+    transform: scale(0.96);
+}
+
+/* --- Progress Bar --- */
+.progress-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.time-label {
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+    min-width: 36px;
+    text-align: center;
+    user-select: none;
+}
+
+.progress-track,
+.volume-track {
+    position: relative;
+    height: 4px;
+    background-color: var(--bg-highlight);
+    border-radius: 2px;
+    cursor: pointer;
+    flex: 1;
+    transition: height var(--transition-fast);
+}
+
+.progress-track:hover,
+.volume-track:hover {
+    height: 6px;
+}
+
+.progress-fill,
+.volume-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--text-primary);
+    border-radius: 2px;
+    pointer-events: none;
+    transition: background-color var(--transition-fast);
+}
+
+.progress-track:hover .progress-fill,
+.volume-track:hover .volume-fill {
+    background-color: var(--accent);
+}
+
+.progress-thumb,
+.volume-thumb {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: var(--text-primary);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-fast);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.progress-track:hover .progress-thumb,
+.volume-track:hover .volume-thumb,
+.progress-track.dragging .progress-thumb,
+.volume-track.dragging .volume-thumb {
+    opacity: 1;
+}
+
+.progress-track.dragging .progress-fill,
+.volume-track.dragging .volume-fill {
+    background-color: var(--accent);
+}
+
+/* --- Right Section: Volume --- */
+.player-bar__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 30%;
+    min-width: 180px;
+    gap: 8px;
+}
+
+.volume-track {
+    width: 100px;
+    flex: none;
+}
+
+/* ============================================================
+   Responsive Adjustments
+   ============================================================ */
+@media (max-width: 768px) {
+    .player-bar__left {
+        display: none;
+    }
+
+    .player-bar__center {
+        width: 100%;
+    }
+
+    .player-bar__right {
+        width: auto;
+        min-width: unset;
+    }
+
+    .volume-track {
+        width: 70px;
+    }
+
+    .album-art-wrapper {
+        width: 260px;
+        height: 260px;
+    }
+
+    .track-title {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .player-bar {
+        padding: 0 10px;
+    }
+
+    .playback-controls {
+        gap: 10px;
+    }
+
+    .control-btn--small {
+        font-size: 0.85rem;
+    }
+
+    .album-art-wrapper {
+        width: 200px;
+        height: 200px;
+    }
+
+    .track-title {
+        font-size: 1.1rem;
+    }
+
+    .track-artist {
+        font-size: 0.9rem;
+    }
+
+    .volume-track {
+        display: none;
+    }
+}
+
+/* --- Utility: selection --- */
+::selection {
+    background-color: var(--accent);
+    color: var(--bg-primary);
+}
