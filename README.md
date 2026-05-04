@@ -1,1 +1,1 @@
-# Custom Media Player
+# Custom Media Player\n\nA highly polished, static-deployable media player mimicking the Spotify web player UI. Built with pure HTML5, CSS3, and Vanilla JavaScript.\n\n
