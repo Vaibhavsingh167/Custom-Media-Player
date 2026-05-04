@@ -1,1 +1,52 @@
-# Custom Media Player\n\nA highly polished, static-deployable media player mimicking the Spotify web player UI. Built with pure HTML5, CSS3, and Vanilla JavaScript.\n\n## Features\n- **Spotify Aesthetic**: Dark mode, exact color palettes, and full-screen layout.\n- **Custom Scrubber**: Uses `requestAnimationFrame` for buttery-smooth progress bar updates.\n- **Audio Controls**: Play, Pause, Next, Previous, and seeking functionality.\n- **Volume Control**: Click and drag to adjust volume dynamically.\n- **No Frameworks**: 100% Vanilla JS, CSS3, and HTML5.\n\n## Tech Stack\n- HTML5\n- CSS3 (Variables, Flexbox)\n- Vanilla JavaScript\n- FontAwesome (Icons)\n- Google Fonts (Inter)\n\n## How to Run Locally\n1. Clone this repository.\n2. Open `index.html` in your favorite modern web browser.\n3. Enjoy the tunes! No build step or local server required.\n\n## Technical Details\nThis project demonstrates the use of the `HTMLAudioElement` API to control audio playback, duration, and volume. For updating the progress bar, it employs `requestAnimationFrame` instead of `setInterval` to sync with the display's refresh rate, resulting in a much smoother UI update process.\n
+# 🎵 Custom Media Player (Spotify Clone)
+
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+
+A highly polished, static-deployable media player mimicking the Spotify web player UI. Built entirely from scratch using pure HTML5, CSS3, and Vanilla JavaScript to demonstrate foundational frontend architecture and UI/UX implementation.
+
+**[🚀 View Live Demo Here](#) *(Replace with your live link, e.g., GitHub Pages or Vercel)***
+
+---
+
+## 📸 Preview
+
+*(Add a screenshot or a GIF of your working player here showing the progress bar moving and hover states)*
+`![App Preview](./assets/preview.gif)`
+
+---
+
+## ✨ Features
+
+### UI/UX Design
+- **Spotify Aesthetic**: A flawless dark mode implementation (`#121212` background) with the iconic Spotify green accent (`#1DB954`).
+- **Responsive Layout**: A full-screen canvas with a persistent, fixed-bottom control bar that adapts to different screen sizes.
+- **Micro-interactions**: Smooth hover states, custom track scrubbers, and pill-shaped interactive elements.
+
+### Core Functionality
+- **Custom Scrubber**: Uses `requestAnimationFrame` for buttery-smooth progress bar updates, eliminating the visual stuttering caused by traditional `setInterval` approaches.
+- **Audio Controls**: Play, Pause, Next, Previous, and dynamic seeking functionality (clicking or dragging the progress bar).
+- **Volume Control**: Click and drag to adjust volume dynamically.
+- **State Management**: Real-time updates for `MM:SS` formatted timestamps and track metadata swapping.
+
+---
+
+## 🛠️ Tech Stack
+
+- **HTML5**: Semantic markup and the native `HTMLAudioElement` API.
+- **CSS3**: CSS Variables (Custom Properties) for a scalable design system, Flexbox for layout management, and custom pseudo-element styling for range sliders.
+- **Vanilla JavaScript**: DOM manipulation, event delegation, and asynchronous browser APIs. No React, no jQuery, no frameworks.
+- **Assets**: FontAwesome (Icons) and Google Fonts (Inter).
+
+---
+
+## 📂 Project Structure
+```text
+├── assets/
+│   ├── audio/          # MP3 files
+│   ├── images/         # Album covers
+├── index.html          # Main HTML structure
+├── style.css           # Global styles and custom UI overrides
+├── script.js           # Audio playback logic and DOM updates
+└── README.md
