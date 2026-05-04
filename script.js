@@ -1,1 +1,1 @@
-const songs = [\n    {\n        title: "Summer Walk",\n        artist: "Olexy",\n
+const songs = [\n    {\n        title: "Summer Walk",\n        artist: "Olexy",\n        src: "https://cdn.pixabay.com/download/audio/2022/03/24/audio_3d1eb351ec.mp3?filename=summer-walk-152722.mp3",\n        cover: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&h=500&fit=crop"\n    },\n    {\n
