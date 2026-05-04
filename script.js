@@ -1,0 +1,1 @@
+const songs = [\n    {\n        title: "Summer Walk",\n        artist: "Olexy",\n
