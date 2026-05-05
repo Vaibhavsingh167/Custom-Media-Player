@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A beautifully designed custom media player inspired by Spotify. Play local audio files or stream from URLs with a premium dark-mode UI.">
     <title>Custom Media Player — Spotify Clone</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,18 +12,65 @@
 </head>
 <body>
 
-    <!-- Main Album Display -->
+    <!-- Main Canvas -->
     <main class="main-container">
+
+        <!-- Album Display -->
         <section class="album-display" aria-label="Now Playing">
             <div class="album-art-wrapper">
                 <img id="cover-art"
                      src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&h=500&fit=crop"
                      alt="Album Art"
                      draggable="false">
+                <!-- Vinyl overlay for flair -->
+                <div class="vinyl-pulse" id="vinyl-pulse"></div>
             </div>
             <h1 id="track-title" class="track-title">Track Title</h1>
             <p id="track-artist" class="track-artist">Artist Name</p>
         </section>
+
+        <!-- Add Track Control Panel -->
+        <aside class="add-track-panel" aria-label="Add Tracks">
+            <h2 class="panel-heading">
+                <i class="fas fa-plus-circle"></i>
+                Add Tracks
+            </h2>
+
+            <!-- Local File Upload -->
+            <div class="panel-section">
+                <label class="panel-label" for="file-input">Local Audio File</label>
+                <label class="file-input-wrapper" id="file-input-label">
+                    <i class="fas fa-folder-open"></i>
+                    <span id="file-input-text">Choose a file…</span>
+                    <input type="file" id="file-input" accept="audio/*" multiple hidden>
+                </label>
+            </div>
+
+            <!-- URL Input -->
+            <div class="panel-section">
+                <label class="panel-label" for="url-input">Audio URL</label>
+                <div class="url-input-row">
+                    <input type="text" id="url-input" class="url-text-input"
+                           placeholder="https://example.com/song.mp3"
+                           spellcheck="false" autocomplete="off">
+                    <button id="add-url-btn" class="add-url-btn" title="Add URL">
+                        <i class="fas fa-plus"></i>
+                        Add
+                    </button>
+                </div>
+            </div>
+
+            <!-- Playlist -->
+            <div class="panel-section panel-section--playlist">
+                <h3 class="panel-sub-heading">
+                    <i class="fas fa-list"></i>
+                    Playlist
+                    <span class="track-count" id="track-count">0 tracks</span>
+                </h3>
+                <ul class="playlist" id="playlist-list" role="list"></ul>
+            </div>
+        </aside>
+
     </main>
 
     <!-- Fixed Bottom Player Bar -->
